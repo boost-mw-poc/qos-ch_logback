@@ -19,7 +19,7 @@ import org.slf4j.spi.LocationAwareLogger;
 /**
  * Defines the set of levels recognized by logback-classic, that is
  * {@link #OFF}, {@link #ERROR}, {@link #WARN}, {@link #INFO}, {@link #DEBUG},
- * and {@link #TRACE}.
+ * {@link #TRACE} and {@link #ALL}.
  * <p/>
  * The <code>Level</code> class is final and cannot be sub-classed.
  * </p>
@@ -82,7 +82,7 @@ public final class Level implements java.io.Serializable {
      */
     public static final Level TRACE = new Level(TRACE_INT, "TRACE");
 
-    /*
+    /**
      * <p>The <code>ALL</code> is used to turn on all logging. The <code>ALL</code> level is vestigial from
      * log4j 1.x.
      * </p>
@@ -96,7 +96,7 @@ public final class Level implements java.io.Serializable {
      *
      * @deprecated with no replacement
      */
-    // public static final Level ALL = new Level(ALL_INT, "ALL");
+    public static final Level ALL = new Level(ALL_INT, "ALL");
 
     public final int levelInt;
     public final String levelStr;
@@ -194,6 +194,8 @@ public final class Level implements java.io.Serializable {
      */
     public static Level toLevel(int val, Level defaultLevel) {
         switch (val) {
+        case ALL_INT:
+            return ALL;
         case TRACE_INT:
             return TRACE;
         case DEBUG_INT:
@@ -223,6 +225,9 @@ public final class Level implements java.io.Serializable {
         // see LOGBACK-1288
         final String in = sArg.trim();
 
+        if (in.equalsIgnoreCase("ALL")) {
+            return Level.ALL;
+        }
         if (in.equalsIgnoreCase("TRACE")) {
             return Level.TRACE;
         }

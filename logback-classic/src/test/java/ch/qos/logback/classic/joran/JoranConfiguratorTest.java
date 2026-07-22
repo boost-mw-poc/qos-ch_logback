@@ -517,7 +517,6 @@ public class JoranConfiguratorTest {
         checker.assertContainsMatch(Status.ERROR, "Problem while parsing");
     }
 
-    @Disabled
     @Test
     public void packageDataDisabledByConfigAttribute() throws JoranException {
         String configFileAsStr = ClassicTestConstants.JORAN_INPUT_PREFIX + "packagingDataDisabled.xml";
@@ -525,7 +524,6 @@ public class JoranConfiguratorTest {
         assertFalse(loggerContext.isPackagingDataEnabled());
     }
 
-    @Disabled
     @Test
     public void packageDataEnabledByConfigAttribute() throws JoranException {
         String configFileAsStr = ClassicTestConstants.JORAN_INPUT_PREFIX + "packagingDataEnabled.xml";

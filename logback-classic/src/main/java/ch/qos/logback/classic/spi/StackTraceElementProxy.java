@@ -33,8 +33,8 @@ public class StackTraceElementProxy implements Serializable {
     // reconstruct this field from 'ste'
     transient private String steAsString;
 
-    //@Deprecated
-    //ClassPackagingData classPackagingData;
+    @Deprecated
+    ClassPackagingData classPackagingData;
 
     // See https://github.com/qos-ch/logback/issues/1040
     static final StackTraceElement NA_SUBSTITUTE = new StackTraceElement(DECLARING_CLASS_NA, METHOD_NAME_NA,
@@ -56,16 +56,16 @@ public class StackTraceElementProxy implements Serializable {
         return ste;
     }
 
-//    public void setClassPackagingData(ClassPackagingData cpd) {
-//        if (this.classPackagingData != null) {
-//            throw new IllegalStateException("Packaging data has been already set");
-//        }
-//        this.classPackagingData = cpd;
-//    }
-//
-//    public ClassPackagingData getClassPackagingData() {
-//        return classPackagingData;
-//    }
+    public void setClassPackagingData(ClassPackagingData cpd) {
+        if (this.classPackagingData != null) {
+            throw new IllegalStateException("Packaging data has been already set");
+        }
+        this.classPackagingData = cpd;
+    }
+
+    public ClassPackagingData getClassPackagingData() {
+        return classPackagingData;
+    }
 
     @Override
     public int hashCode() {
@@ -85,13 +85,13 @@ public class StackTraceElementProxy implements Serializable {
         if (!ste.equals(other.ste)) {
             return false;
         }
-//        if (classPackagingData == null) {
-//            if (other.classPackagingData != null) {
-//                return false;
-//            }
-//        } else if (!classPackagingData.equals(other.classPackagingData)) {
-//            return false;
-//        }
+        if (classPackagingData == null) {
+            if (other.classPackagingData != null) {
+                return false;
+            }
+        } else if (!classPackagingData.equals(other.classPackagingData)) {
+            return false;
+        }
         return true;
     }
 

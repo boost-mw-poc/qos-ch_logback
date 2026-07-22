@@ -110,9 +110,9 @@ public class PatternLayout extends PatternLayoutBase<ILoggingEvent> {
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("rootException", RootCauseFirstThrowableProxyConverter::new);
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("throwable", ThrowableProxyConverter::new);
 
-        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xEx", ThrowableProxyConverter::new);
-        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xException", ThrowableProxyConverter::new);
-        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xThrowable", ThrowableProxyConverter::new);
+        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xEx", ExtendedThrowableProxyConverter::new);
+        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xException", ExtendedThrowableProxyConverter::new);
+        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xThrowable", ExtendedThrowableProxyConverter::new);
 
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("nopex", NopThrowableInformationConverter::new);
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("nopexception", NopThrowableInformationConverter::new);

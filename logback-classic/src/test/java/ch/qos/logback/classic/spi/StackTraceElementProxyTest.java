@@ -93,17 +93,41 @@ public class StackTraceElementProxyTest {
         assertEquals(step.getSTEAsString(), step.toString());
     }
 
+    @Test
+    public void classPackagingData() {
+        StackTraceElementProxy step = new StackTraceElementProxy(null);
+
+        assertEquals(null, step.getClassPackagingData());
+
+        ClassPackagingData cpd = new ClassPackagingData("some.jar", "1.0", true);
+        step.setClassPackagingData(cpd);
+        assertSame(cpd, step.getClassPackagingData());
+
+        // second set must throw
+        assertThrows(IllegalStateException.class, () -> step.setClassPackagingData(new ClassPackagingData("x", "y")));
+
+        // packaging data affects equals
+        StackTraceElementProxy step2 = new StackTraceElementProxy(null);
+        step2.setClassPackagingData(new ClassPackagingData("some.jar", "1.0", true));
+        assertEquals(step, step2);
+
+        StackTraceElementProxy step3 = new StackTraceElementProxy(null);
+        step3.setClassPackagingData(new ClassPackagingData("other.jar", "2.0", false));
+        assertNotEquals(step, step3);
+    }
 
     @Test
     public void serializationRoundTripPreservesBehavior() throws IOException, ClassNotFoundException {
         // normal STE case
         StackTraceElement realSTE = new StackTraceElement("p.q.R", "m", "R.java", 7);
         StackTraceElementProxy original = new StackTraceElementProxy(realSTE);
+        original.setClassPackagingData(new ClassPackagingData("loc", "ver"));
         String originalAsString = original.getSTEAsString(); // force cache of transient
 
         StackTraceElementProxy deserialized = roundTripSerialize(original);
         assertEquals(original, deserialized);
         assertEquals(originalAsString, deserialized.getSTEAsString());
+        assertEquals(original.getClassPackagingData(), deserialized.getClassPackagingData()); // deserialized instance, use equals not same
 
         // null STE (NA_SUBSTITUTE) case
         StackTraceElementProxy originalNull = new StackTraceElementProxy(null);

@@ -92,10 +92,12 @@ public class PackagingDataCalculator {
                 if (firsExactClassLoader == null) {
                     firsExactClassLoader = lastExactClassLoader;
                 }
-                //ClassPackagingData pi = calculateByExactType(callerClass);
+                ClassPackagingData pi = calculateByExactType(callerClass);
+                step.setClassPackagingData(pi);
             } else {
                 missfireCount++;
-                //ClassPackagingData pi = computeBySTEP(step, lastExactClassLoader);
+                ClassPackagingData pi = computeBySTEP(step, lastExactClassLoader);
+                step.setClassPackagingData(pi);
             }
         }
         populateUncommonFrames(commonFrames, stepArray, firsExactClassLoader);
@@ -106,6 +108,138 @@ public class PackagingDataCalculator {
         int uncommonFrames = stepArray.length - commonFrames;
         for (int i = 0; i < uncommonFrames; i++) {
             StackTraceElementProxy step = stepArray[i];
+            ClassPackagingData pi = computeBySTEP(step, firstExactClassLoader);
+            step.setClassPackagingData(pi);
+        }
+    }
+
+    private ClassPackagingData calculateByExactType(Class<?> type) {
+        String className = type.getName();
+        ClassPackagingData cpd = cache.get(className);
+        if (cpd != null) {
+            return cpd;
+        }
+        String version = getImplementationVersion(type);
+        String codeLocation = getCodeLocation(type);
+        cpd = new ClassPackagingData(codeLocation, version);
+        cache.put(className, cpd);
+        return cpd;
+    }
+
+    private ClassPackagingData computeBySTEP(StackTraceElementProxy step, ClassLoader lastExactClassLoader) {
+        String className = step.ste.getClassName();
+        ClassPackagingData cpd = cache.get(className);
+        if (cpd != null) {
+            return cpd;
+        }
+        Class<?> type = bestEffortLoadClass(lastExactClassLoader, className);
+        String version = getImplementationVersion(type);
+        String codeLocation = getCodeLocation(type);
+        cpd = new ClassPackagingData(codeLocation, version, false);
+        cache.put(className, cpd);
+        return cpd;
+    }
+
+    String getImplementationVersion(Class<?> type) {
+        if (type == null) {
+            return "na";
+        }
+        Package aPackage = type.getPackage();
+        if (aPackage != null) {
+            String v = aPackage.getImplementationVersion();
+            if (v == null) {
+                return "na";
+            } else {
+                return v;
+            }
+        }
+        return "na";
+
+    }
+
+    String getCodeLocation(Class<?> type) {
+        try {
+            if (type != null) {
+                // file:/C:/java/maven-2.0.8/repo/com/icegreen/greenmail/1.3/greenmail-1.3.jar
+                CodeSource codeSource = type.getProtectionDomain().getCodeSource();
+                if (codeSource != null) {
+                    URL resource = codeSource.getLocation();
+                    if (resource != null) {
+                        String locationStr = resource.toString();
+                        // now lets remove all but the file name
+                        String result = getCodeLocation(locationStr, '/');
+                        if (result != null) {
+                            return result;
+                        }
+                        return getCodeLocation(locationStr, '\\');
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+        return "na";
+    }
+
+    private String getCodeLocation(String locationStr, char separator) {
+        int idx = locationStr.lastIndexOf(separator);
+        if (isFolder(idx, locationStr)) {
+            idx = locationStr.lastIndexOf(separator, idx - 1);
+            return locationStr.substring(idx + 1);
+        } else if (idx > 0) {
+            return locationStr.substring(idx + 1);
+        }
+        return null;
+    }
+
+    private boolean isFolder(int idx, String text) {
+        return (idx != -1 && idx + 1 == text.length());
+    }
+
+    private Class<?> loadClass(ClassLoader cl, String className) {
+        if (cl == null) {
+            return null;
+        }
+        try {
+            return cl.loadClass(className);
+        } catch (ClassNotFoundException e1) {
+            return null;
+        } catch (NoClassDefFoundError e1) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace(); // this is unexpected
+            return null;
+        }
+
+    }
+
+    /**
+     * @param lastGuaranteedClassLoader may be null
+     * @param className
+     * @return
+     */
+    private Class<?> bestEffortLoadClass(ClassLoader lastGuaranteedClassLoader, String className) {
+        Class<?> result = loadClass(lastGuaranteedClassLoader, className);
+        if (result != null) {
+            return result;
+        }
+        ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+        if (tccl != lastGuaranteedClassLoader) {
+            result = loadClass(tccl, className);
+        }
+        if (result != null) {
+            return result;
+        }
+
+        try {
+            return Class.forName(className);
+        } catch (ClassNotFoundException e1) {
+            return null;
+        } catch (NoClassDefFoundError e1) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace(); // this is unexpected
+            return null;
         }
     }
 
