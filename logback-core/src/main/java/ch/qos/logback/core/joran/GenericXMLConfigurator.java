@@ -119,16 +119,6 @@ public abstract class GenericXMLConfigurator extends ContextAwareBase {
         }
     }
 
-    /**
-     * Removed in 1.5.27 with no replacement.
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public static void informContextOfURLUsedForConfiguration(Context context, URL url) {
-        //
-    }
-
     public final void doConfigure(InputStream inputStream) throws JoranException {
         doConfigure(new InputSource(inputStream));
     }

@@ -28,28 +28,4 @@ public class ModelUtil {
         model.resetForReuse();
     }
 
-
-
-    /**
-     * Add all the properties found in the argument named 'props' to an
-     * ModelInterpretationContext.
-     *
-     * @deprecated moved to {@link PropertyModelHandlerHelper#setProperty}
-     */
-    @Deprecated
-    static public void setProperty(ModelInterpretationContext mic, String key, String value, Scope scope) {
-        PropertyModelHandlerHelper.setProperty(mic, key, value, scope);
-    }
-
-    /**
-     * Add all the properties found in the argument named 'props' to an
-     * ModelInterpretationContext.
-     *
-     * @deprecated   moved to {@link PropertyModelHandlerHelper#setProperties}
-     */
-    @Deprecated
-    static public void setProperties(ModelInterpretationContext mic, Properties props, Scope scope) {
-        PropertyModelHandlerHelper.setProperties(mic, props, scope);
-    }
-
 }

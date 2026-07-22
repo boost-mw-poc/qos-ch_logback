@@ -48,10 +48,6 @@ import static ch.qos.logback.core.CoreConstants.EVALUATOR_MAP;
  */
 public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCycle {
 
-    /**
-     * Default setting of packaging data in stack traces
-     */
-    public static final boolean DEFAULT_PACKAGING_DATA = false;
 
     final Logger root;
     private int size;
@@ -62,7 +58,6 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
 
     private LoggerContextVO loggerContextRemoteView;
     private final TurboFilterList turboFilterList = new TurboFilterList();
-    private boolean packagingDataEnabled = DEFAULT_PACKAGING_DATA;
     SequenceNumberGenerator sequenceNumberGenerator = null; // by default there is no SequenceNumberGenerator
 
     MDCAdapter mdcAdapter;
@@ -203,12 +198,21 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
         return loggerContextRemoteView;
     }
 
+    /**
+     * Packaging data is no longer supported.
+     * @param packagingDataEnabled
+     */
+    @Deprecated
     public void setPackagingDataEnabled(boolean packagingDataEnabled) {
-        this.packagingDataEnabled = packagingDataEnabled;
+
     }
 
+    /**
+     * Packaging data is no longer supported.
+     */
+    @Deprecated
     public boolean isPackagingDataEnabled() {
-        return packagingDataEnabled;
+        return false;
     }
 
     void cancelScheduledTasks() {

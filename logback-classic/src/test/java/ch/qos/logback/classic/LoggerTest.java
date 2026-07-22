@@ -161,8 +161,8 @@ public class LoggerTest {
 
     @Test
     public void testEnabled_All() throws Exception {
-        root.setLevel(Level.ALL);
-        checkLevelThreshold(loggerTest, Level.ALL);
+        root.setLevel(Level.TRACE);
+        checkLevelThreshold(loggerTest, Level.TRACE);
     }
 
     @Test

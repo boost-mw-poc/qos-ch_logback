@@ -44,13 +44,8 @@ public class EnsureExceptionHandling implements PostCompileProcessor<ILoggingEve
         }
         if (!chainHandlesThrowable(head)) {
             Converter<ILoggingEvent> tail = ConverterUtil.findTail(head);
-            Converter<ILoggingEvent> exConverter = null;
             LoggerContext loggerContext = (LoggerContext) context;
-            if (loggerContext.isPackagingDataEnabled()) {
-                exConverter = new ExtendedThrowableProxyConverter();
-            } else {
-                exConverter = new ThrowableProxyConverter();
-            }
+            Converter<ILoggingEvent> exConverter  = new ThrowableProxyConverter();
             tail.setNext(exConverter);
         }
     }

@@ -240,7 +240,6 @@ public class CorpusModel {
         ThrowableProxyVO throwableProxy = null;
         if (t != null) {
             throwableProxy = ThrowableProxyVO.build(new ThrowableProxy(t));
-            pupulateWithPackagingData(throwableProxy.getStackTraceElementProxyArray());
         }
         return new LogStatement(loggerName, randomLevel, mat, throwableProxy);
     }
@@ -252,20 +251,6 @@ public class CorpusModel {
             return ExceptionBuilder.build(random, NESTING_PROBABILITY);
         } else {
             return null;
-        }
-    }
-
-    private void pupulateWithPackagingData(StackTraceElementProxy[] stepArray) {
-        int i = 0;
-        for (StackTraceElementProxy step : stepArray) {
-            String identifier = "na";
-            String version = "na";
-            if (i++ % 2 == 0) {
-                identifier = getRandomJavaIdentifier();
-                version = getRandomJavaIdentifier();
-            }
-            ClassPackagingData cpd = new ClassPackagingData(identifier, version);
-            step.setClassPackagingData(cpd);
         }
     }
 

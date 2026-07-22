@@ -49,14 +49,6 @@ public class PatternLayoutEncoderBase<E> extends LayoutWrappingEncoder<E> {
         return outputPatternAsHeader;
     }
 
-    /**
-     * @deprecated replaced by {@link #setOutputPatternAsHeader(boolean)}
-     */
-    public void setOutputPatternAsPresentationHeader(boolean outputPatternAsHeader) {
-        addWarn("[outputPatternAsPresentationHeader] property is deprecated. Please use [outputPatternAsHeader] option instead.");
-        this.outputPatternAsHeader = outputPatternAsHeader;
-    }
-
     @Override
     public void setLayout(Layout<E> layout) {
         throw new UnsupportedOperationException("one cannot set the layout of " + this.getClass().getName());

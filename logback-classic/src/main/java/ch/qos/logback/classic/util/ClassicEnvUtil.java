@@ -47,26 +47,4 @@ public class ClassicEnvUtil {
         }
         return listOfT;
     }
-
-    /**
-     * <p>Returns the current version of logback-classic, or null if data is not
-     * available.
-     * </p>
-     *
-     * TODO: remove in 1.6
-     *
-     * @since 1.5.15
-     * @return current version or null if missing version data
-     * @deprecated See {@link ch.qos.logback.classic.util.ClassicVersionUtil#getVersionBySelfDeclaredProperties()}
-     *
-     */
-    @Deprecated
-    static public String getVersionOfLogbackClassic() {
-        try {
-            return VersionUtil.getVersionOfArtifact(ClassicConstants.class);
-        } catch (NoClassDefFoundError e) {
-            return null;
-        }
-    }
-
 }

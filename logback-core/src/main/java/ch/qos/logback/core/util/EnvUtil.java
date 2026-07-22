@@ -26,20 +26,6 @@ public class EnvUtil {
     private EnvUtil() {
     }
 
-
-    /**
-     * <p>Returns the current version of logback-core, or null if data is not
-     * available.
-     * </p>
-     *
-     * @since 1.3.0
-     * @return current version or null if missing version data
-     * @deprecated See {@link VersionUtil#getVersionOfArtifact(Class)}
-     */
-    static public String logbackVersion() {
-        return VersionUtil.getVersionOfArtifact(CoreConstants.class);
-    }
-
     static public int getJDKVersion(String javaVersionStr) {
         int version = 0;
 

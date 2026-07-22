@@ -57,32 +57,6 @@ public class VersionUtil {
         this.context = context;
     }
 
-    /**
-     * Retrieves the version of an artifact, such as logback-core.jar, logback-access-common.jar etc.
-     *
-     * <p>The aClass parameter is assumed to be part of the artifact.
-     * </p>
-     *
-     * <p>The method first attempts to get the version from the module information. If the module version
-     * is not available, it falls back to retrieving the implementation version from the package.
-     * </p>
-     *
-     * @param aClass the class from which to retrieve the version information
-     * @return the version of the artifact where aClass is found, or null if the version cannot be determined
-     * @deprecated
-     */
-    static public String getVersionOfArtifact(Class<?> aClass) {
-        String moduleVersion = getVersionOfClassByModule(aClass);
-        if (moduleVersion != null)
-            return moduleVersion;
-
-        Package pkg = aClass.getPackage();
-        if (pkg == null) {
-            return null;
-        }
-        return pkg.getImplementationVersion();
-    }
-
     static public String nonNull(String input) {
         if (input == null) {
             return NA;

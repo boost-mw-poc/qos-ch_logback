@@ -92,10 +92,11 @@ public class ConfigurationModelHandler extends ModelHandlerBase {
         }
 
         LoggerContext lc = (LoggerContext) context;
-        boolean packagingData = OptionHelper.toBoolean(mic.subst(configurationModel.getPackagingDataStr()),
-                LoggerContext.DEFAULT_PACKAGING_DATA);
-        lc.setPackagingDataEnabled(packagingData);
 
+        String packagingDataStr = configurationModel.getPackagingDataStr();
+        if(!OptionHelper.isNullOrEmpty(packagingDataStr)) {
+            addWarn("As of version 1.6.0 packaging data is no longer supported.");
+        }
         ContextUtil contextUtil = new ContextUtil(context);
         contextUtil.addGroovyPackages(lc.getFrameworkPackages());
 

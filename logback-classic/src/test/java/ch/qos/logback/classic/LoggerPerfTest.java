@@ -162,7 +162,7 @@ public class LoggerPerfTest {
     }
 
     double computeDurationOfEnabledLog(long len) {
-        lbLogger.setLevel(Level.ALL);
+        lbLogger.setLevel(Level.TRACE);
 
         NOPAppender<ILoggingEvent> nopAppender = new NOPAppender<ILoggingEvent>();
         nopAppender.start();

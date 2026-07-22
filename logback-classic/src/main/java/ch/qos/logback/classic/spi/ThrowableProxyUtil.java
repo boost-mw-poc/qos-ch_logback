@@ -114,24 +114,10 @@ public class ThrowableProxyUtil {
         subjoinExceptionMessage(buf, tp);
     }
 
-    public static void subjoinPackagingData(StringBuilder builder, StackTraceElementProxy step) {
-        if (step != null) {
-            ClassPackagingData cpd = step.getClassPackagingData();
-            if (cpd != null) {
-                if (!cpd.isExact()) {
-                    builder.append(" ~[");
-                } else {
-                    builder.append(" [");
-                }
 
-                builder.append(cpd.getCodeLocation()).append(':').append(cpd.getVersion()).append(']');
-            }
-        }
-    }
 
     public static void subjoinSTEP(StringBuilder sb, StackTraceElementProxy step) {
         sb.append(step.toString());
-        subjoinPackagingData(sb, step);
     }
 
     /**

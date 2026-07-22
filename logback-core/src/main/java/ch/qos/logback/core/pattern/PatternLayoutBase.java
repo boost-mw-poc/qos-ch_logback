@@ -65,8 +65,8 @@ abstract public class PatternLayoutBase<E> extends LayoutBase<E> {
      *
      * @return a map of keys and class names
      */
-    @Deprecated
-    abstract public Map<String, String> getDefaultConverterMap();
+    //@Deprecated
+    //abstract public Map<String, String> getDefaultConverterMap();
 
     /**
      * Returns a map where the default converter map is merged with the map
@@ -110,8 +110,8 @@ abstract public class PatternLayoutBase<E> extends LayoutBase<E> {
 
         migrateFromStringMapToSupplierMap(mapFromContext, effectiveMap);
 
-        Map<String, String> defaultConverterMap = getDefaultConverterMap();
-        migrateFromStringMapToSupplierMap(defaultConverterMap, effectiveMap);
+        //Map<String, String> defaultConverterMap = getDefaultConverterMap();
+        //migrateFromStringMapToSupplierMap(defaultConverterMap, effectiveMap);
     }
 
     private void migrateFromStringMapToSupplierMap(Map<String, String> legacyMap, Map<String, Supplier<DynamicConverter>> targetSupplierMap) {
@@ -155,16 +155,6 @@ abstract public class PatternLayoutBase<E> extends LayoutBase<E> {
 
     public void setPostCompileProcessor(PostCompileProcessor<E> postCompileProcessor) {
         this.postCompileProcessor = postCompileProcessor;
-    }
-
-    /**
-     *
-     * @param head
-     * @deprecated Use {@link ConverterUtil#setContextForConverters} instead. This
-     *             method will be removed in future releases.
-     */
-    protected void setContextForConverters(Converter<E> head) {
-        ConverterUtil.setContextForConverters(getContext(), head);
     }
 
     protected String writeLoopOnConverters(E event) {

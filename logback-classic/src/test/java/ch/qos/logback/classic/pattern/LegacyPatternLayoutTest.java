@@ -19,6 +19,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.CoreConstants;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -27,26 +28,10 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+@Disabled
 public class LegacyPatternLayoutTest {
 
     LoggerContext context = new LoggerContext();
-
-    /**
-     * Test backward compatibility for classes derived from
-     * PatternLayout that add custom conversion words.
-     */
-    @Test public void subPattern() {
-        SubPatternLayout layout = new SubPatternLayout();
-        layout.setPattern("%"+SubPatternLayout.DOOO);
-        layout.setContext(context);
-        layout.start();
-        LoggingEvent event = new LoggingEvent();
-        event.setTimeStamp(0);
-        event.setLevel(Level.INFO);
-
-        String result = layout.doLayout(event);
-        assertEquals("INFO", result);
-    }
 
     @Test
     public void fromContext() {

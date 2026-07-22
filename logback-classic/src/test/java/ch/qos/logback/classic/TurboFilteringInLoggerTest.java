@@ -185,7 +185,7 @@ public class TurboFilteringInLoggerTest {
     @Test
     public void testIsErrorEnabledWithDenyBlueFilter() {
         addDenyBLUEFilter();
-        logger.setLevel(Level.ALL);
+        logger.setLevel(Level.TRACE);
         assertFalse(logger.isDebugEnabled(blueMarker));
     }
 

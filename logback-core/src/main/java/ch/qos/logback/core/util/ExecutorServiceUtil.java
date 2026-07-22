@@ -57,13 +57,6 @@ public class ExecutorServiceUtil {
     }
 
     /**
-     * @deprecated replaced by {@link #newThreadPoolExecutor()}
-     */
-    static public ExecutorService newExecutorService() {
-        return newThreadPoolExecutor();
-    }
-
-    /**
      * Creates an ThreadPoolExecutor suitable for use by logback components.
      *
      * @since 1.4.7

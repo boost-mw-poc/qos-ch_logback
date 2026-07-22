@@ -21,7 +21,7 @@ import ch.qos.logback.core.CoreConstants;
  * @author Tomasz Nurkiewicz
  * @since 0.9.30
  */
-public class RootCauseFirstThrowableProxyConverter extends ExtendedThrowableProxyConverter {
+public class RootCauseFirstThrowableProxyConverter extends ThrowableProxyConverter {
 
     @Override
     protected String throwableProxyToString(IThrowableProxy tp) {

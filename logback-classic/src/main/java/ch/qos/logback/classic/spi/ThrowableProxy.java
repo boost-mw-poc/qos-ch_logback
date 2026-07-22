@@ -194,7 +194,6 @@ public class ThrowableProxy implements IThrowableProxy {
         for (StackTraceElementProxy step : stackTraceElementProxyArray) {
             String string = step.toString();
             builder.append(CoreConstants.TAB).append(string);
-            ThrowableProxyUtil.subjoinPackagingData(builder, step);
             builder.append(CoreConstants.LINE_SEPARATOR);
         }
         System.out.println(builder.toString());

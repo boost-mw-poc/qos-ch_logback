@@ -164,15 +164,6 @@ public class ConfigurationWatchList extends ContextAwareBase {
         return true;
     }
 
-
-    /**
-     *
-     * @deprecated replaced by {@link #changeDetectedInFile()}
-     */
-    public File changeDetected() {
-      return changeDetectedInFile();
-    }
-
     /**
      * Has a changed been detected in one of the files being watched?
      * @return

@@ -34,27 +34,15 @@ import ch.qos.logback.core.pattern.parser.Parser;
  * pattern</em>.
  * <p>
  * For more information about this layout, please refer to the online manual at
- * http://logback.qos.ch/manual/layouts.html#PatternLayout
- * 
+ * <a href="http://logback.qos.ch/manual/layouts.html#PatternLayout">layouts.html#PatternLayout</a>
+ *
  */
 
 public class PatternLayout extends PatternLayoutBase<ILoggingEvent> {
 
     public static final Map<String, Supplier<DynamicConverter>> DEFAULT_CONVERTER_SUPPLIER_MAP = new HashMap<>();
 
-    /**
-     * @deprecated replaced by {@link #DEFAULT_CONVERTER_SUPPLIER_MAP}
-     */
-    @Deprecated
-    public static final Map<String, String> DEFAULT_CONVERTER_MAP = new HashMap<>();
     public static final Map<String, String> CONVERTER_CLASS_TO_KEY_MAP = new HashMap<String, String>();
-
-    /**
-     * @deprecated replaced by {@link #DEFAULT_CONVERTER_MAP} in turn itself replaced  by
-     * {@link #DEFAULT_CONVERTER_SUPPLIER_MAP}
-     */
-    @Deprecated
-    public static final Map<String, String> defaultConverterMap = DEFAULT_CONVERTER_MAP;
 
     public static final String HEADER_PREFIX = "#logback.classic pattern: ";
 
@@ -122,9 +110,9 @@ public class PatternLayout extends PatternLayoutBase<ILoggingEvent> {
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("rootException", RootCauseFirstThrowableProxyConverter::new);
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("throwable", ThrowableProxyConverter::new);
 
-        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xEx", ExtendedThrowableProxyConverter::new);
-        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xException", ExtendedThrowableProxyConverter::new);
-        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xThrowable", ExtendedThrowableProxyConverter::new);
+        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xEx", ThrowableProxyConverter::new);
+        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xException", ThrowableProxyConverter::new);
+        DEFAULT_CONVERTER_SUPPLIER_MAP.put("xThrowable", ThrowableProxyConverter::new);
 
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("nopex", NopThrowableInformationConverter::new);
         DEFAULT_CONVERTER_SUPPLIER_MAP.put("nopexception", NopThrowableInformationConverter::new);
@@ -184,22 +172,6 @@ public class PatternLayout extends PatternLayoutBase<ILoggingEvent> {
 
     public Map<String, Supplier<DynamicConverter>> getDefaultConverterSupplierMap() {
         return DEFAULT_CONVERTER_SUPPLIER_MAP;
-    }
-
-    /**
-     * <p>BEWARE: The map of type String,String for mapping conversion words is deprecated.
-     * Use {@link #getDefaultConverterSupplierMap()} instead.</p>
-     *
-     * <p>Existing code such as getDefaultMap().put("k", X.class.getName()) should be replaced by
-     * getDefaultConverterSupplierMap().put("k", X::new) </p>
-     *
-     * <p>Note that values in the map will still be taken into account and processed correctly.</p>
-     *
-     * @return a map of keys and class names
-     */
-    @Deprecated
-    public Map<String, String> getDefaultConverterMap() {
-        return DEFAULT_CONVERTER_MAP;
     }
 
     public String doLayout(ILoggingEvent event) {
