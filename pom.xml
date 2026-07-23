@@ -450,9 +450,8 @@
         <artifactId>maven-jxr-plugin</artifactId>
         <version>${maven-jxr-plugin.version}</version>
         <configuration>
-          <aggregate>true</aggregate>
-          <!--<javadocDir>target/site/apidocs/</javadocDir>-->
-          <linkJavadoc>false</linkJavadoc>
+          <docTitle>Logback ${project.version} Reference</docTitle>
+          <windowTitle>Logback ${project.version} Reference</windowTitle>
         </configuration>
       </plugin>
 
